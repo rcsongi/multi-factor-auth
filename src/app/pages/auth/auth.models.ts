@@ -16,9 +16,18 @@ export interface RegisterDto {
   userName: string;
 }
 
+export interface TwoFactorAuthDto {
+  twoFactorAuthenticationCode: string;
+}
+
 export interface AccesTokenModel {
   email: string;
   exp: number;
   iat: number;
   isSecondFactorAuthenticated: boolean;
+  isTwoFactorEnabled: boolean;
+}
+
+export interface LoginResponseModel {
+  accesToken: string;
 }

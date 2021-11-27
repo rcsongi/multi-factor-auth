@@ -8,17 +8,20 @@ import { AuthService } from 'src/app/pages/auth/auth.service';
 export class AuthGuard implements CanActivate, CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
   canActivate(): boolean {
-    if (this.authService.isAuthenticated()) {
-      return true;
-    } else {
-      this.router.navigateByUrl('auth/login');
-      return false;
-    }
+    return this.authenticate();
   }
 
   canLoad(): boolean {
+    return this.authenticate();
+  }
+
+  authenticate(): boolean {
     if (this.authService.isAuthenticated()) {
-      return true;
+      if (this.authService.isSecondFactorAuthenticated()) {
+        return true;
+      } else {
+        this.router.navigateByUrl('auth/twofactor');
+      }
     } else {
       this.router.navigateByUrl('auth/login');
       return false;

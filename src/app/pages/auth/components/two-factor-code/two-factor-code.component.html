@@ -1,0 +1,21 @@
+<div class="auth-container">
+    <div class="auth-title">Kód megadása</div>
+    <div class="auth-subtitle">
+        Nyissa meg az alkalmazást és adja meg a fiókjához tartozó kódot
+    </div>
+
+    <form class="auth-form" [formGroup]="twofactorForm">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Kód</mat-label>
+            <input matInput formControlName="code" />
+
+            <mat-error *ngIf="formControls.code.hasError('required')">
+                Kód megadása <strong>kötelező</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="sendCode()" [disabled]="!twofactorForm.valid">
+      Kód küldése
+    </button>
+    </form>
+</div>

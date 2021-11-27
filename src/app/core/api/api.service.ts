@@ -6,6 +6,7 @@ import { Environment } from '../environment/environment.model';
 import { ENVIRONMENT } from '../environment/environment.token';
 import { RequestOptions } from './api.models';
 import { catchError, tap } from 'rxjs/operators';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,8 @@ export class ApiService {
   constructor(
     private client: HttpClient,
     @Inject(ENVIRONMENT) private environment: Environment,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {}
 
   public get<T>(url: string, options?: RequestOptions): Observable<T> {
@@ -65,13 +67,15 @@ export class ApiService {
         }
       }),
       catchError((error: HttpErrorResponse) => {
-        console.log(error);
+        this.notificationService.openSnackbar(
+          error.error ? error.error.message : 'Váratlan hiba történt'
+        );
         switch (error.status) {
           case 401:
             this.router.navigateByUrl('/auth/login');
             break;
           default:
-          //TODO
+            break;
         }
         return throwError(error);
       })

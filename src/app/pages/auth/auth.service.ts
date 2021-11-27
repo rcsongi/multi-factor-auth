@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import jwtDecode from 'jwt-decode';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/api/api.service';
-import { LoginDataModel, RegisterDataModel, RegisterDto } from './auth.models';
+import {
+  AccesTokenModel,
+  LoginDataModel,
+  LoginResponseModel,
+  RegisterDataModel,
+  RegisterDto,
+  TwoFactorAuthDto,
+} from './auth.models';
 
 const ACCES_TOKEN = 'ACCES_TOKEN';
 
@@ -16,9 +24,9 @@ export class AuthService {
     private jwtHelper: JwtHelperService
   ) {}
 
-  login(loginData: LoginDataModel): Observable<{ accesToken: string }> {
+  login(loginData: LoginDataModel): Observable<LoginResponseModel> {
     return this.apiService
-      .post<{ accesToken: string }>('auth/signIn', loginData)
+      .post<LoginResponseModel>('auth/signIn', loginData)
       .pipe(tap((res) => this.setAccesToken(res.accesToken)));
   }
 
@@ -29,6 +37,13 @@ export class AuthService {
       userName: registerData.userName,
     };
     return this.apiService.post('auth/signUp', dto);
+  }
+
+  sendTwoFactorCode(code: string): Observable<LoginResponseModel> {
+    const dto: TwoFactorAuthDto = { twoFactorAuthenticationCode: code };
+    return this.apiService
+      .post<LoginResponseModel>('tfa/authenticate', dto)
+      .pipe(tap((res) => this.setAccesToken(res.accesToken)));
   }
 
   setAccesToken(token: string): void {
@@ -49,5 +64,15 @@ export class AuthService {
     } else {
       return false;
     }
+  }
+
+  isSecondFactorAuthenticated(): boolean {
+    const token = this.getAccesToken;
+    const jwt = jwtDecode(token) as AccesTokenModel;
+
+    return (
+      !jwt.isTwoFactorEnabled ||
+      (jwt.isTwoFactorEnabled && jwt.isSecondFactorAuthenticated)
+    );
   }
 }

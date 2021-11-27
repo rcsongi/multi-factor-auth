@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/core/notification/notification.service';
-import { RegisterDataModel } from '../auth.models';
-import { AuthService } from '../auth.service';
+import { RegisterDataModel } from '../../auth.models';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-register',

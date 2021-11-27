@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/core/notification/notification.service';
-import { LoginDataModel } from '../auth.models';
-import { AuthService } from '../auth.service';
+import { LoginDataModel } from '../../auth.models';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -32,17 +32,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe(
-        (res) => {
-          this.notificationService.openSnackbar('Sikeres Bejelentkezés');
-          this.router.navigateByUrl('/home');
-        },
-        (err: HttpErrorResponse) => {
-          this.notificationService.openSnackbar(
-            err.error ? err.error.message : 'Váratlan hiba történt'
-          );
-        }
-      );
+      this.authService.login(this.loginForm.value).subscribe((res) => {
+        this.notificationService.openSnackbar('Sikeres Bejelentkezés');
+        this.router.navigateByUrl('/home');
+      });
     } else {
     }
   }
