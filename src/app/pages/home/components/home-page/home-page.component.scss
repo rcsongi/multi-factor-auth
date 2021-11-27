@@ -1,0 +1,10 @@
+:host {
+    width: 90%;
+}
+
+.home-tab-group {
+    align-items: center;
+     ::ng-deep .mat-tab-body-wrapper {
+        width: 100%;
+    }
+}

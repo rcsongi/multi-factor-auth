@@ -1,0 +1,54 @@
+<div class="auth-container">
+    <div class="auth-title">Regisztráció</div>
+
+    <div class="auth-subtitle">
+        Van már fiókja? <span (click)="navigateToLogin()">Ide</span> kattintva bejelentkezhet.
+    </div>
+
+    <form class="auth-form" [formGroup]="registerForm">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com" />
+            <mat-error *ngIf="
+          registerFormControls.email.hasError('email') &&
+          !registerFormControls.email.hasError('required')
+        ">
+                Helyes email formátumot adjon meg.
+            </mat-error>
+            <mat-error *ngIf="registerFormControls.email.hasError('required')">
+                Email megadása <strong>kötelező</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Felhasználó név</mat-label>
+            <input matInput formControlName="userName" />
+
+            <mat-error *ngIf="registerFormControls.userName.hasError('required')">
+                Felhasználó név <strong>kötelező</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Jelszó</mat-label>
+            <input type="password" matInput formControlName="password" />
+
+            <mat-error *ngIf="registerFormControls.password.hasError('required')">
+                Jelszó megadása <strong>kötelező</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Jelszó újra</mat-label>
+            <input type="password" matInput formControlName="passwordAgain" />
+
+            <mat-error *ngIf="registerFormControls.passwordAgain.hasError('required')">
+                Jelszó megadása <strong>kötelező</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="register()" [disabled]="!registerForm.valid">
+      Bejelentkezés
+    </button>
+    </form>
+</div>

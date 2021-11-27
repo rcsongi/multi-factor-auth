@@ -1,0 +1,35 @@
+<div class="auth-container">
+    <div class="auth-title">Bejelentkezés</div>
+    <div class="auth-subtitle">
+        Még nem regisztrált? <span (click)="navigateToReg()">Ide</span> kattintva megteheti.
+    </div>
+
+    <form class="auth-form" [formGroup]="loginForm">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com" />
+            <mat-error *ngIf="
+          loginFormControls.email.hasError('email') &&
+          !loginFormControls.email.hasError('required')
+        ">
+                Helyes email formátumot adjon meg.
+            </mat-error>
+            <mat-error *ngIf="loginFormControls.email.hasError('required')">
+                Email megadása <strong>kötelező</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Jelszó</mat-label>
+            <input type="password" matInput formControlName="password" />
+
+            <mat-error *ngIf="loginFormControls.password.hasError('required')">
+                Jelszó megadása <strong>kötelező</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="login()" [disabled]="!loginForm.valid">
+      Bejelentkezés
+    </button>
+    </form>
+</div>
