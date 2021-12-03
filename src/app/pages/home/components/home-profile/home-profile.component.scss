@@ -1,0 +1,46 @@
+.home-profile-container {
+    width: 100%;
+    display: flex;
+    padding-top: 64px;
+    .profile-pic {
+        width: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &-container {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img {
+                width: 100%;
+                border-radius: 500px;
+            }
+        }
+    }
+    .personal-info {
+        display: flex;
+        flex-direction: column;
+        &-container {
+            display: flex;
+            align-items: center;
+            &-title {
+                font-weight: bold;
+                width: 250px;
+                padding-bottom: 21.5px;
+                margin: 4px 0;
+            }
+            mat-form-field {
+                width: 250px;
+            }
+            &-slider {
+                padding-bottom: 21.5px;
+                margin: 4px 0;
+            }
+            &-data {
+                padding-bottom: 21.5px;
+                margin: 4px 0;
+            }
+        }
+    }
+}

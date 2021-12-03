@@ -1,1 +1,37 @@
-<p>home-profile works!</p>
+<div class="home-profile-container">
+    <div class="profile-pic">
+        <div class="profile-pic-container">
+            <img src="assets/images/base-profile.png" />
+        </div>
+    </div>
+    <div class="personal-info">
+        <h2>Személyes adatok</h2>
+
+        <div class="personal-info-container">
+            <div class="personal-info-container-title">Felhasználó név:</div>
+            <mat-form-field appearance="outline">
+                <input matInput readonly type="text" [value]="user.userName" />
+            </mat-form-field>
+        </div>
+        <div class="personal-info-container">
+            <div class="personal-info-container-title">Email cím:</div>
+            <mat-form-field appearance="outline">
+                <input matInput readonly type="text" [value]="user.email" />
+            </mat-form-field>
+        </div>
+        <div class="personal-info-container">
+            <div class="personal-info-container-title">Google Authenticator:</div>
+            <div class="personal-info-container-data">
+                <span>
+          {{
+            user.isTwoFactorEnabled ? "Csatlakoztatva" : "Nincs csatlakoztatva"
+          }}
+        </span>
+
+                <button mat-flat-button color="primary" (click)="changeGoogleAuthStatus()">
+          {{ user.isTwoFactorEnabled ? "Leválasztás" : "Csatlakozás" }}
+        </button>
+            </div>
+        </div>
+    </div>
+</div>

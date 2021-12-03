@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import jwtDecode from 'jwt-decode';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/api/api.service';
 import {
@@ -11,6 +11,7 @@ import {
   RegisterDataModel,
   RegisterDto,
   TwoFactorAuthDto,
+  User,
 } from './auth.models';
 
 const ACCES_TOKEN = 'ACCES_TOKEN';
@@ -19,10 +20,13 @@ const ACCES_TOKEN = 'ACCES_TOKEN';
   providedIn: 'root',
 })
 export class AuthService {
+  private currentUserSubject = new BehaviorSubject<User>(null);
   constructor(
     private apiService: ApiService,
     private jwtHelper: JwtHelperService
-  ) {}
+  ) {
+    this.currentUserSubject.next(jwtDecode(this.getAccesToken) as User);
+  }
 
   login(loginData: LoginDataModel): Observable<LoginResponseModel> {
     return this.apiService
@@ -48,6 +52,15 @@ export class AuthService {
 
   setAccesToken(token: string): void {
     localStorage.setItem(ACCES_TOKEN, token);
+
+    if (token) {
+      const jwt = jwtDecode(token) as AccesTokenModel;
+      this.currentUserSubject.next({
+        email: jwt.email,
+        isTwoFactorEnabled: jwt.isTwoFactorEnabled,
+        userName: jwt.userName,
+      });
+    }
   }
 
   get getAccesToken(): string {
@@ -74,5 +87,9 @@ export class AuthService {
       !jwt.isTwoFactorEnabled ||
       (jwt.isTwoFactorEnabled && jwt.isSecondFactorAuthenticated)
     );
+  }
+
+  get getUser(): Observable<User> {
+    return this.currentUserSubject.asObservable();
   }
 }

@@ -22,6 +22,7 @@ export interface TwoFactorAuthDto {
 
 export interface AccesTokenModel {
   email: string;
+  userName: string;
   exp: number;
   iat: number;
   isSecondFactorAuthenticated: boolean;
@@ -30,4 +31,10 @@ export interface AccesTokenModel {
 
 export interface LoginResponseModel {
   accesToken: string;
+}
+
+export interface User {
+  userName: string;
+  email: string;
+  isTwoFactorEnabled: boolean;
 }

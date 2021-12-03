@@ -8,6 +8,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const IMPORTS = [
   MatToolbarModule,
@@ -17,6 +20,9 @@ const IMPORTS = [
   MatButtonModule,
   ReactiveFormsModule,
   MatTabsModule,
+  MatSelectModule,
+  MatSlideToggleModule,
+  MatDialogModule,
 ];
 
 @NgModule({

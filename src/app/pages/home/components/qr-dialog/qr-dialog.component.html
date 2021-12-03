@@ -1,0 +1,18 @@
+<h1>
+    Olvassa be a Qr kódót a Google Hitelesítő alkalmazással, majd írja be az ott kapott kódot.
+</h1>
+<img [src]="data" alt="" />
+<form [formGroup]="activateForm">
+    <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Kód</mat-label>
+        <input matInput formControlName="code" />
+
+        <mat-error *ngIf="formControls.code.hasError('required')">
+            Kód megadása <strong>kötelező</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="activate()" [disabled]="!activateForm.valid">
+    Aktiválás
+  </button>
+</form>
